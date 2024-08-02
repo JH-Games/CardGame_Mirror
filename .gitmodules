@@ -1,0 +1,3 @@
+[submodule "CardGame_Mirror/Assets/_Imported/Extensions/UnityExtensions"]
+	path = CardGame_Mirror/Assets/_Imported/Extensions/UnityExtensions
+	url = https://github.com/Joknaa/UnityExtensions
