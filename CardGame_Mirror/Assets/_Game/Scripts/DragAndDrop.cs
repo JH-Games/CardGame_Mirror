@@ -18,7 +18,7 @@ namespace _Game.Scripts {
         
 
         private void Start() {
-            _isDraggable = authority;
+            _isDraggable = isOwned;
             
             _camera = Camera.main;
             
@@ -40,7 +40,7 @@ namespace _Game.Scripts {
             if (!_isDragging) return;
             
             var newPos = _camera.ScreenToWorldPoint((Vector2)Input.mousePosition + _offset);
-            newPos.z = 0;
+            newPos.z = 1;
             transform.position = newPos;
         }
 

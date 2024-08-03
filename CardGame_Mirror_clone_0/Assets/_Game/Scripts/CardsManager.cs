@@ -23,7 +23,7 @@ namespace _Game.Scripts {
 
         private void DrawCard() {
             PlayerManager = NetworkClient.connection.identity.GetComponent<PlayerManager>();
-            PlayerManager.CmdDealCard();
+            PlayerManager.CmdDealCardInServer();
         }
         
         

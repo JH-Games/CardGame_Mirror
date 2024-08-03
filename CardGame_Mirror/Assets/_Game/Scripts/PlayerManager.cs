@@ -29,26 +29,26 @@ public class PlayerManager : NetworkBehaviour {
     public override void OnStartServer() {
         base.OnStartServer();
         _cards.Add(Card);
-        Debug.Log(_cards);
     }
 
 
     [Command]
-    public void CmdDealCard() {
+    public void CmdDealCardInServer() {
         for (int i = 0; i < maxCards; i++) {
-            var card = Instantiate(Card, PlayerArea);
+            var card = Instantiate(Card);
             card.sprite = cardImages.Random();
             NetworkServer.Spawn(card.gameObject, connectionToClient);
-            RpcShowCard(card.gameObject, "Dealt");
+            RpcShowCardInClient(card.gameObject, "Dealt");
             _drawnCards.Add(card);
         }
     }
 
     [ClientRpc]
-    private void RpcShowCard(GameObject card, string type) {
+    private void RpcShowCardInClient(GameObject card, string type) {
         switch (type) {
             case "Dealt":
-                card.transform.SetParent(authority ? PlayerArea : EnemyArea, false);
+                Debug.Log("client: " + isClient + " .. server: " + isServer + " .. authority: " + authority + " .. isOwned: " + isOwned);
+                card.transform.SetParent(isOwned ? PlayerArea : EnemyArea, false);
                 break;
             case "Played":
                 card.transform.SetParent(DropZone, false);
@@ -57,12 +57,10 @@ public class PlayerManager : NetworkBehaviour {
     }
 
 
-    public void PlayCard(GameObject card) {
-        CmdPlayCard(card);
-    }
+    public void PlayCard(GameObject card) => CmdPlayCardInServer(card);
 
     [Command]
-    private void CmdPlayCard(GameObject card) {
-        RpcShowCard(card, "Played");
+    private void CmdPlayCardInServer(GameObject card) {
+        RpcShowCardInClient(card, "Played");
     }
 }
