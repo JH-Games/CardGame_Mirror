@@ -17,12 +17,33 @@ public class PlayerManager : NetworkBehaviour {
     private List<Image> _cards = new List<Image>();
     private List<Image> _drawnCards = new List<Image>();
 
+    private int _clientsCount;
 
     public override void OnStartClient() {
         base.OnStartClient();
         PlayerArea = GameObject.Find("PlayerArea").transform;
         EnemyArea = GameObject.Find("EnemyArea").transform;
         DropZone = GameObject.Find("DropZone").transform;
+        
+        // // get a list of the clients 
+        // var clients = NetworkServer.connections;
+        // _clientsCount++;
+        //
+        // if (_clientsCount == 1) {
+        //     PlayerArea = GameObject.Find("PlayerArea").transform;
+        //     EnemyArea00 = GameObject.Find("EnemyArea_00").transform;
+        //     EnemyArea01 = GameObject.Find("EnemyArea_01").transform;
+        // } else if (_clientsCount == 2) {
+        //     PlayerArea = GameObject.Find("EnemyArea_00").transform;
+        //     EnemyArea00 = GameObject.Find("PlayerArea").transform;
+        //     EnemyArea01 = GameObject.Find("EnemyArea_01").transform;
+        // } else if (_clientsCount == 3) {
+        //     PlayerArea = GameObject.Find("EnemyArea_01").transform;
+        //     EnemyArea00 = GameObject.Find("EnemyArea_00").transform;
+        //     EnemyArea01 = GameObject.Find("PlayerArea").transform;
+        // }
+        // DropZone = GameObject.Find("DropZone").transform;
+
     }
 
 
@@ -49,12 +70,11 @@ public class PlayerManager : NetworkBehaviour {
         switch (type) {
             case "Dealt":
                 card.transform.SetParent(isOwned ? PlayerArea : EnemyArea, false);
-                Debug.Log(" isOwned: " + isOwned);
                 card.GetComponent<CardFlipper>().SetFace();
-
                 break;
             case "Played":
                 card.transform.SetParent(DropZone, false);
+                card.GetComponent<CardFlipper>().Show();
                 break;
         }
     }

@@ -24,6 +24,18 @@ namespace _Game.Scripts {
             _isInit = true;
         }
 
+        public void Show() {
+            if (!_isInit) Init();
+            _isHidden = false;
+            _image.sprite = CardFront;
+        }
+        
+        public void Hide() {
+            if (!_isInit) Init();
+            _image.sprite = CardBack;
+            _isHidden = true;
+        }
+
         public void SetFace() {
             if (!_isInit) Init();
             if (isOwned) RpcFlip();
