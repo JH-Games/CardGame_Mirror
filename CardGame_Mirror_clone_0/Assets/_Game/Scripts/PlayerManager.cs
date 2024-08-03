@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using _Game.Scripts;
 using Mirror;
 using OknaaEXTENSIONS;
 using UnityEngine;
@@ -47,8 +48,10 @@ public class PlayerManager : NetworkBehaviour {
     private void RpcShowCardInClient(GameObject card, string type) {
         switch (type) {
             case "Dealt":
-                Debug.Log("client: " + isClient + " .. server: " + isServer + " .. authority: " + authority + " .. isOwned: " + isOwned);
                 card.transform.SetParent(isOwned ? PlayerArea : EnemyArea, false);
+                Debug.Log(" isOwned: " + isOwned);
+                card.GetComponent<CardFlipper>().SetFace();
+
                 break;
             case "Played":
                 card.transform.SetParent(DropZone, false);
